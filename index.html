@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sigma Alchemy</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        .output {
+            margin-top: 20px;
+        }
+        .inventory {
+            font-weight: bold;
+        }
+        .message {
+            margin-top: 10px;
+            font-size: 1.2em;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Welcome to Sigma Alchemy</h1>
+
+    <div>
+        <p class="inventory">Inventory: <span id="inventory"></span></p>
+    </div>
+
+    <div>
+        <label for="emoji1">Enter the first emoji: </label>
+        <input type="text" id="emoji1" maxlength="2" placeholder="e.g., 💧">
+    </div>
+    <div>
+        <label for="emoji2">Enter the second emoji: </label>
+        <input type="text" id="emoji2" maxlength="2" placeholder="e.g., 🔥">
+    </div>
+
+    <button id="combineButton">Combine Emojis</button>
+
+    <div class="output">
+        <p id="outputMessage" class="message"></p>
+    </div>
+
+    <script>
+        // Formula mapping
+        const formula = {
+            "💧🔥": "🧯",
+            "💧💨": "☁️",
+            "🔥💨": "🔫",
+            "🌍🔥": "☀️",
+            "💧🌍": "🧬"
+        };
+
+        // Initial inventory
+        let inventory = ["🔥", "💧", "💨", "🌍"];
+
+        // Function to update inventory display
+        function updateInventory() {
+            const inventoryElement = document.getElementById("inventory");
+            inventoryElement.textContent = inventory.join(" ");
+        }
+
+        // Function to combine the emojis
+        function combineEmojis() {
+            const item1 = document.getElementById("emoji1").value;
+            const item2 = document.getElementById("emoji2").value;
+            const outputMessage = document.getElementById("outputMessage");
+
+            if (!item1 || !item2) {
+                outputMessage.textContent = "Please enter both emojis!";
+                return;
+            }
+
+            // Combine the emojis in both possible orders
+            const key1 = item1 + item2;
+            const key2 = item2 + item1;
+
+            if (inventory.includes(item1) || inventory.includes(item2)) {
+                if (formula[key1]) {
+                    if (inventory.includes(formula[key1])) {
+                        outputMessage.textContent = `You've already gyatt it before!`;
+                    } else {
+                        inventory.push(formula[key1]);
+                        outputMessage.textContent = `You've gyatt it! You gyatt a ${formula[key1]}!`;
+                    }
+                } else if (formula[key2]) {
+                    if (inventory.includes(formula[key2])) {
+                        outputMessage.textContent = `You've already gyatt it before!`;
+                    } else {
+                        inventory.push(formula[key2]);
+                        outputMessage.textContent = `You've gyatt it! You gyatt a ${formula[key2]}!`;
+                    }
+                } else {
+                    outputMessage.textContent = "This formula does not exist.";
+                }
+            } else {
+                outputMessage.textContent = "Error - your inventory does not contain the emojis you entered!";
+            }
+
+            updateInventory(); // Update the inventory after each action
+        }
+
+        // Add event listener to the "Combine Emojis" button
+        document.getElementById("combineButton").addEventListener("click", combineEmojis);
+
+        // Initial update of the inventory display
+        updateInventory();
+    </script>
+
+</body>
+</html>
