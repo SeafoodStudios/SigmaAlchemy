@@ -67,16 +67,13 @@
             "🌌🪨": "🌙"
         };
 
-        // Initial inventory
         let inventory = ["🔥", "💧", "💨", "🌍"];
 
-        // Function to update inventory display
         function updateInventory() {
             const inventoryElement = document.getElementById("inventory");
             inventoryElement.textContent = inventory.join(" ");
         }
 
-        // Function to combine the emojis
         function combineEmojis() {
             const item1 = document.getElementById("emoji1").value;
             const item2 = document.getElementById("emoji2").value;
@@ -87,7 +84,6 @@
                 return;
             }
 
-            // Combine the emojis in both possible orders
             const key1 = item1 + item2;
             const key2 = item2 + item1;
 
@@ -113,13 +109,11 @@
                 outputMessage.textContent = "Error - your inventory does not contain the emojis you entered!";
             }
 
-            updateInventory(); // Update the inventory after each action
+            updateInventory();
         }
 
-        // Add event listener to the "Combine Emojis" button
         document.getElementById("combineButton").addEventListener("click", combineEmojis);
 
-        // Initial update of the inventory display
         updateInventory();
     </script>
 
